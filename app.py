@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import psycopg2
-import psycopg2.extras
+# import psycopg2
+# import psycopg2.extras
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -24,6 +24,8 @@ def get_db_connection():
         password=app.config['POSTGRES_PASSWORD'],
         port=app.config['POSTGRES_PORT']
     )
+
+
 
 @app.route('/')
 def index():
@@ -155,12 +157,6 @@ def arriendos():
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
     return render_template('arriendos.html')
-
-# Función para limpiar números
-def limpiar_numero(valor):
-    if isinstance(valor, str):
-        return float(valor.replace(',', '').replace('.', ''))
-    return float(valor)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
