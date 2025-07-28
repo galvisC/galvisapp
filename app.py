@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
 # Configuración para Render con PostgreSQL
-app.config['POSTGRES_HOST'] = os.environ.get('MYSQL_HOST', 'dpg-d23qq2muk2gs738r9nag-a')
+app.config['POSTGRES_HOST'] = os.environ.get('MYSQL_HOST', 'dpg-d23qq2muk2gs738r9nag-a.oregon-postgres.render.com')
 app.config['POSTGRES_USER'] = os.environ.get('MYSQL_USER', 'galvisapp_db_ko5j_user')
 app.config['POSTGRES_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', 'eHdExi5SX9PTAr2BfUfJMv0Kke7fGpRd')
 app.config['POSTGRES_DB'] = os.environ.get('MYSQL_DB', 'galvisapp_db_ko5j')
