@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Editar Venta Fama 46{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <h2>Editar Venta</h2>
+  <form method="POST" class="row g-3" id="form-editar-venta-f46">
+    <div class="col-md-6">
+      <input type="text" class="form-control" id="monto-editar-f46" name="monto" value="{{ '{:,}'.format(venta.monto|int) if venta.monto|float == venta.monto|int else '{:,}'.format(venta.monto|float) }}" required autocomplete="off">
+    </div>
+    <div class="col-md-6">
+      <input type="date" class="form-control" name="fecha" value="{{ venta.fecha }}" required>
+    </div>
+    <div class="col-12 d-grid">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+  <a href="{{ url_for('fama46_ventas') }}" class="btn btn-link mt-3">Volver a la lista de ventas</a>
+</div>
+<script>
+  // Formatear el campo monto con puntos de miles mientras se escribe
+  const montoEditarInput = document.getElementById('monto-editar-f46');
+  montoEditarInput.addEventListener('input', function(e) {
+    let value = this.value.replace(/\./g, '').replace(/,/g, '').replace(/[^\d]/g, '');
+    if (value) {
+      value = parseInt(value, 10).toLocaleString('es-CO');
+    }
+    this.value = value;
+  });
+  // Al enviar el formulario, quitar los puntos para guardar solo el número
+  document.getElementById('form-editar-venta-f46').addEventListener('submit', function(e) {
+    montoEditarInput.value = montoEditarInput.value.replace(/\./g, '').replace(/,/g, '');
+  });
+</script>
+{% endblock %} 

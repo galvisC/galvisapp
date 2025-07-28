@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Bienvenido a GalvisApp{% endblock %}
+{% block content %}
+<style>
+  .hero-bg {
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    padding: 3rem 1rem 2rem 1rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(37,99,235,0.45);
+    z-index: 1;
+    border-radius: 1.5rem;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-icon {
+    font-size: 5rem;
+    filter: drop-shadow(0 2px 8px #2226);
+    margin-bottom: 1rem;
+    animation: bounce 2s infinite alternate;
+  }
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-18px); }
+  }
+  .eslogan {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #fbbf24;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 8px #2226;
+  }
+</style>
+<div class="row justify-content-center align-items-center" style="min-height:70vh;">
+  <div class="col-lg-8">
+    <div class="hero-bg mb-5">
+      <div class="hero-content text-center">
+        <div class="hero-icon">🐮🌾🏡</div>
+        <h1 class="display-4 fw-bold mb-2">¡Bienvenido a <span style="color:#fbbf24;">GalvisApp</span>!</h1>
+        <div class="eslogan">"El campo, la finca y tu negocio... ¡todo en tus manos!"</div>
+        <p class="lead mb-4" style="font-size:1.25rem;">
+          Recuerda que aquí puedes gestionar tus carnicerías, finca y arriendos de forma fácil, rápida y desde cualquier dispositivo.<br>
+          <span style="color:#fffbe7;">¡Aquí tus cuentas y ventas siempre están vigiladas! 👀💰</span>
+        </p>
+        <div class="mt-5 d-flex flex-column flex-md-row justify-content-center gap-3">
+          <a href="/login" class="btn btn-lg btn-warning px-5 py-2 shadow text-dark fw-bold"><i class="fa-solid fa-right-to-bracket me-2"></i>Iniciar sesión</a>
+          <a href="/registro" class="btn btn-lg btn-outline-light px-5 py-2 shadow fw-bold"><i class="fa-solid fa-user-plus me-2"></i>Registrarse</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

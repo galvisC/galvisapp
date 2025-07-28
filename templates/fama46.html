@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Fama 46{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <h2>🐂 Fama 46</h2>
+  <div class="row g-3 mt-3">
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">💰 Gastos</h5>
+          <a href="{{ url_for('fama46_gastos') }}" class="btn btn-outline-primary w-100">Ver/Agregar Gastos</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">📈 Ventas diarias</h5>
+          <a href="{{ url_for('fama46_ventas') }}" class="btn btn-outline-primary w-100">Ver/Agregar Ventas</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">🐄 Ganado</h5>
+          <a href="{{ url_for('fama46_ganado') }}" class="btn btn-outline-primary w-100">Ver/Agregar Ganado</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

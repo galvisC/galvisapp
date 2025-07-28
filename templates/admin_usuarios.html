@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Aprobar usuarios{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <h2>Usuarios pendientes de aprobación</h2>
+  {% if pendientes %}
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Fecha de registro</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in pendientes %}
+        <tr>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.fecha_registro }}</td>
+          <td>
+            <a href="/admin/aprobar/{{ user.id }}" class="btn btn-success btn-sm">Aprobar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-info mt-3">No hay usuarios pendientes.</div>
+  {% endif %}
+</div>
+{% endblock %} 

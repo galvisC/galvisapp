@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Menudos Carnicería 88{% endblock %}
+{% block content %}
+<style>
+  .form-select { min-width: 90px; }
+</style>
+<div class="mt-4">
+  <h2>🥩 Menudos - Carnicería 88</h2>
+  <form method="POST" class="row g-3 mb-4" id="form-menudo">
+    <div class="col-md-2">
+      <input type="number" class="form-control" name="cantidad" placeholder="Cantidad" required min="1">
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" id="monto-menudo" name="monto" placeholder="Monto" required autocomplete="off">
+    </div>
+    <div class="col-md-2">
+      <input type="date" class="form-control" name="fecha" required>
+    </div>
+    <div class="col-md-2">
+      <select class="form-select" id="pago-menudo" name="pago" required>
+        <option value="Sí">💸 Sí</option>
+        <option value="No" selected>❌ No</option>
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-success">Agregar</button>
+    </div>
+  </form>
+  <script>
+    // Formatear el campo monto con puntos de miles mientras se escribe
+    const montoMenudoInput = document.getElementById('monto-menudo');
+    montoMenudoInput.addEventListener('input', function(e) {
+      let value = this.value.replace(/\./g, '').replace(/,/g, '').replace(/[^\d]/g, '');
+      if (value) {
+        value = parseInt(value, 10).toLocaleString('es-CO');
+      }
+      this.value = value;
+    });
+    // Al enviar el formulario, quitar los puntos para guardar solo el número
+    document.getElementById('form-menudo').addEventListener('submit', function(e) {
+      montoMenudoInput.value = montoMenudoInput.value.replace(/\./g, '').replace(/,/g, '');
+    });
+  </script>
+  <h4 class="mt-4">Lista de menudos</h4>
+  <table class="table table-striped mt-2">
+    <thead>
+      <tr>
+        <th>Cantidad</th>
+        <th>Monto</th>
+        <th>Fecha</th>
+        <th>¿Pagó?</th>
+        <th>Agregado por</th>
+        {% if session['es_admin'] %}<th>Acciones</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for menudo in menudos %}
+      <tr>
+        <td>{{ menudo.cantidad }}</td>
+        <td>
+          {% set monto = menudo.monto|float %}
+          {% if monto == monto|int %}
+            ${{ "{:,}".format(monto|int) }}
+          {% else %}
+            ${{ "{:,}".format(monto) }}
+          {% endif %}
+        </td>
+        <td>{{ menudo.fecha }}</td>
+        <td>{% if menudo.pago == 'Sí' %}<span class="badge bg-success">Pagó</span>{% else %}<span class="badge bg-danger">No pagado</span>{% endif %}</td>
+        <td><span class="badge bg-info">{{ menudo.usuario_nombre }}</span></td>
+        {% if session['es_admin'] %}
+        <td>
+          <a href="{{ url_for('editar_menudo_c88', menudo_id=menudo.id) }}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{{ url_for('borrar_menudo_c88', menudo_id=menudo.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas borrar este menudo?');">Borrar</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="mt-3">
+    <strong>Total cantidad:</strong> {{ total_cantidad }}<br>
+    <strong>Total monto pagado:</strong>
+    {% set total = total_monto|float %}
+    {% if total == total|int %}
+      ${{ "{:,}".format(total|int) }}
+    {% else %}
+      ${{ "{:,}".format(total) }}
+    {% endif %}
+  </div>
+  <div class="mt-4">
+    <a href="{{ url_for('carniceria88') }}" class="btn btn-outline-primary"><i class="fa-solid fa-arrow-left me-2"></i>Volver a Carnicería 88</a>
+  </div>
+</div>
+{% endblock %} 

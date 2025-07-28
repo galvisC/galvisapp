@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Editar Gasto Fama 46{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <h2>Editar Gasto</h2>
+  <form method="POST" class="row g-3" id="form-editar-gasto-fama">
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="descripcion" value="{{ gasto.descripcion }}" required>
+    </div>
+    <div class="col-md-2">
+      {% set monto = gasto.monto|float %}
+      <input type="text" class="form-control" id="monto-editar-fama" name="monto" value="{% if monto == monto|int %}{{ '{:,}'.format(monto|int) }}{% else %}{{ '{:,.2f}'.format(monto) }}{% endif %}" required autocomplete="off">
+    </div>
+    <div class="col-md-2">
+      <input type="date" class="form-control" name="fecha" value="{{ gasto.fecha }}" required>
+    </div>
+    <div class="col-md-2">
+      <select class="form-select" id="pago-editar-fama" name="pago" required>
+        <option value="Sí" {% if gasto.pago == 'Sí' %}selected{% endif %}>💸 Sí</option>
+        <option value="No" {% if gasto.pago == 'No' %}selected{% endif %}>❌ No</option>
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+  <script>
+    // Formatear el campo monto con puntos de miles mientras se edita
+    const montoEditarFamaInput = document.getElementById('monto-editar-fama');
+    montoEditarFamaInput.addEventListener('input', function(e) {
+      let value = this.value.replace(/\./g, '').replace(/,/g, '').replace(/[^\d]/g, '');
+      if (value) {
+        value = parseInt(value, 10).toLocaleString('es-CO');
+      }
+      this.value = value;
+    });
+    // Al enviar el formulario, quitar los puntos para guardar solo el número
+    document.getElementById('form-editar-gasto-fama').addEventListener('submit', function(e) {
+      montoEditarFamaInput.value = montoEditarFamaInput.value.replace(/\./g, '').replace(/,/g, '');
+    });
+  </script>
+  <a href="{{ url_for('fama46_gastos') }}" class="btn btn-link mt-3">Volver a la lista de gastos</a>
+</div>
+{% endblock %} 

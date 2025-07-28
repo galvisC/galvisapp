@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Gastos Fama 46{% endblock %}
+{% block content %}
+<style>
+  .form-select { min-width: 90px; }
+</style>
+<div class="mt-4">
+  <h2>💰 Gastos - Fama 46</h2>
+  <form method="POST" class="row g-3 mb-4" id="form-gasto-fama">
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="descripcion" placeholder="Descripción" required>
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" id="monto-fama" name="monto" placeholder="Monto" required autocomplete="off">
+    </div>
+    <div class="col-md-2">
+      <input type="date" class="form-control" name="fecha" required>
+    </div>
+    <div class="col-md-2">
+      <select class="form-select" id="pago-fama" name="pago" required>
+        <option value="Sí">💸 Sí</option>
+        <option value="No" selected>❌ No</option>
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-success">Agregar</button>
+    </div>
+  </form>
+  <script>
+    // Formatear el campo monto con puntos de miles mientras se escribe
+    const montoFamaInput = document.getElementById('monto-fama');
+    montoFamaInput.addEventListener('input', function(e) {
+      let value = this.value.replace(/\./g, '').replace(/,/g, '').replace(/[^\d]/g, '');
+      if (value) {
+        value = parseInt(value, 10).toLocaleString('es-CO');
+      }
+      this.value = value;
+    });
+    // Al enviar el formulario, quitar los puntos para guardar solo el número
+    document.getElementById('form-gasto-fama').addEventListener('submit', function(e) {
+      montoFamaInput.value = montoFamaInput.value.replace(/\./g, '').replace(/,/g, '');
+    });
+  </script>
+  <h4 class="mt-4">Lista de gastos</h4>
+  <table class="table table-striped mt-2">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Monto</th>
+        <th>Fecha</th>
+        <th>¿Pagó?</th>
+        <th>Agregado por</th>
+        {% if session['es_admin'] %}<th>Acciones</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for gasto in gastos %}
+      <tr>
+        <td>{{ gasto.descripcion }}</td>
+        <td>
+          {% set monto = gasto.monto|float %}
+          {% if monto == monto|int %}
+            ${{ "{:,}".format(monto|int) }}
+          {% else %}
+            ${{ "{:,}".format(monto) }}
+          {% endif %}
+        </td>
+        <td>{{ gasto.fecha }}</td>
+        <td>{% if gasto.pago == 'Sí' %}<span class="badge bg-success">Pagó</span>{% else %}<span class="badge bg-danger">No pagado</span>{% endif %}</td>
+        <td><span class="badge bg-info">{{ gasto.usuario_nombre }}</span></td>
+        {% if session['es_admin'] %}
+        <td>
+          <a href="{{ url_for('editar_gasto_f46', gasto_id=gasto.id) }}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{{ url_for('borrar_gasto_f46', gasto_id=gasto.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas borrar este gasto?');">Borrar</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="mt-3">
+    <strong>Total gastado:</strong>
+    {% set total = total_gastado|float %}
+    {% if total == total|int %}
+      ${{ "{:,}".format(total|int) }}
+    {% else %}
+      ${{ "{:,}".format(total) }}
+    {% endif %}
+  </div>
+  <div class="mt-4">
+    <a href="{{ url_for('fama46') }}" class="btn btn-outline-primary"><i class="fa-solid fa-arrow-left me-2"></i>Volver a Fama 46</a>
+  </div>
+</div>
+{% endblock %} 

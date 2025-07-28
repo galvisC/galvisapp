@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Iniciar sesión | GalvisApp{% endblock %}
+{% block content %}
+<style>
+  .form-bg {
+    background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 32px rgba(37,99,235,0.10);
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .form-icon {
+    font-size: 2.5rem;
+    color: #2563eb;
+    margin-bottom: 0.7rem;
+  }
+  .form-title {
+    font-weight: bold;
+    color: #22223b;
+    margin-bottom: 1.2rem;
+    letter-spacing: 1px;
+  }
+  .form-label { font-weight: 500; }
+  .btn-primary { font-weight: bold; letter-spacing: 1px; }
+  .form-link { color: #2563eb; text-decoration: underline; }
+  .form-link:hover { color: #1e40af; }
+</style>
+<div class="row justify-content-center align-items-center" style="min-height:65vh;">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="form-bg">
+      <div class="text-center">
+        <div class="form-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+        <div class="form-title">Iniciar sesión en GalvisApp</div>
+      </div>
+      <form method="POST">
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="email" name="email" required autofocus>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
+      </form>
+      <div class="text-center mt-3">
+        <span>¿No tienes cuenta? <a href="/registro" class="form-link">Regístrate</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

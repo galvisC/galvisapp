@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GalvisApp{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .btn-primary, .btn-outline-primary {
+            border-radius: 2rem;
+        }
+        .container {
+            flex: 1 0 auto;
+        }
+        footer {
+            background: #22223b;
+            color: #fff;
+            padding: 0.7rem 0 0.3rem 0;
+            text-align: center;
+            margin-top: 2rem;
+            flex-shrink: 0;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .icono-modulo {
+            font-size: 2.2rem;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+        @media (max-width: 576px) {
+            .navbar-brand { font-size: 1.1rem; }
+            .icono-modulo { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <span style="font-size:1.7rem;line-height:1;">🐮</span> GalvisApp
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% if session['usuario_id'] %}
+          <li class="nav-item"><a class="nav-link" href="/panel"><i class="fa-solid fa-table-columns"></i> Panel</a></li>
+          {% if session['es_admin'] %}
+          <li class="nav-item"><a class="nav-link" href="/admin/usuarios"><i class="fa-solid fa-user-check"></i> Aprobar usuarios</a></li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="/login"><i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión</a></li>
+          <li class="nav-item"><a class="nav-link" href="/registro"><i class="fa-solid fa-user-plus"></i> Registrarse</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container pb-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</div>
+<footer>
+  <div>GalvisApp &copy; 2025</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Editar Compra{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <h2>Editar Compra</h2>
+  <form method="POST" class="row g-2 align-items-end" id="form-editar-pollo">
+    <div class="col-md-2">
+      <select class="form-select" id="tipo-editar" name="tipo_compra" required onchange="cambiarPlaceholderCantidad()">
+        <option value="pollo" {% if tipo == 'pollo' %}selected{% endif %}>Pollo</option>
+        <option value="menudencia" {% if tipo == 'menudencia' %}selected{% endif %}>Menudencia</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="number" step="0.01" class="form-control" id="cantidad_editar" name="cantidad_kg" value="{{ compra.cantidad_kg }}" required placeholder="Cantidad (kg)">
+    </div>
+    <div class="col-md-2">
+      {% set monto = compra.precio_total|float %}
+      <input type="text" class="form-control" id="monto-editar-pollo" name="precio_total" value="{% if monto == monto|int %}{{ '{:,}'.format(monto|int) }}{% else %}{{ '{:,.2f}'.format(monto) }}{% endif %}" required autocomplete="off" placeholder="Precio total">
+    </div>
+    <div class="col-md-2">
+      <input type="date" class="form-control" name="fecha" value="{{ compra.fecha }}" required>
+    </div>
+    <div class="col-md-2">
+      <select class="form-select" id="pago-editar-pollo" name="pago" required>
+        <option value="Sí" {% if compra.pago == 'Sí' %}selected{% endif %}>💸 Sí</option>
+        <option value="No" {% if compra.pago == 'No' %}selected{% endif %}>❌ No</option>
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+  <script>
+    // Cambiar el placeholder de cantidad según el tipo
+    function cambiarPlaceholderCantidad() {
+      const tipo = document.getElementById('tipo-editar').value;
+      const cantidad = document.getElementById('cantidad_editar');
+      if (tipo === 'pollo') {
+        cantidad.placeholder = 'Cantidad (kg)';
+      } else {
+        cantidad.placeholder = 'Cantidad';
+      }
+    }
+    document.getElementById('tipo-editar').addEventListener('change', cambiarPlaceholderCantidad);
+    cambiarPlaceholderCantidad();
+    // Formatear el campo monto con puntos de miles mientras se edita
+    const montoEditarPolloInput = document.getElementById('monto-editar-pollo');
+    montoEditarPolloInput.addEventListener('input', function(e) {
+      let value = this.value.replace(/\./g, '').replace(/,/g, '').replace(/[^\d]/g, '');
+      if (value) {
+        value = parseInt(value, 10).toLocaleString('es-CO');
+      }
+      this.value = value;
+    });
+    // Al enviar el formulario, quitar los puntos para guardar solo el número
+    document.getElementById('form-editar-pollo').addEventListener('submit', function(e) {
+      montoEditarPolloInput.value = montoEditarPolloInput.value.replace(/\./g, '').replace(/,/g, '');
+    });
+  </script>
+  <a href="{{ url_for('carniceria88_pollo') }}" class="btn btn-link mt-3">Volver a la lista de compras</a>
+</div>
+{% endblock %} 

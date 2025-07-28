@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Panel GalvisApp{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <div class="text-center mb-4">
+    <span style="font-size:3rem;">🌾🐮🏡</span>
+    <h2 class="fw-bold mt-2" style="color:#2563eb;">¡Hola, {{ nombre }}!</h2>
+    <p class="lead">Selecciona el módulo que deseas gestionar:</p>
+  </div>
+  <div class="row g-4 justify-content-center">
+    <div class="col-12 col-md-6 col-lg-3">
+      <a href="/carniceria88" class="text-decoration-none">
+        <div class="card h-100 shadow border-0 text-center p-4">
+          <div class="icono-modulo">🥩</div>
+          <div class="fw-bold mb-2">Carnicería 88</div>
+          <span class="badge bg-primary">Gastos, Ventas, Menudos, Pollo</span>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3">
+      <a href="/fama46" class="text-decoration-none">
+        <div class="card h-100 shadow border-0 text-center p-4">
+          <div class="icono-modulo">🐂</div>
+          <div class="fw-bold mb-2">Fama 46</div>
+          <span class="badge bg-success">Gastos, Ventas, Ganado</span>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3">
+      <a href="/finca_esmeralda" class="text-decoration-none">
+        <div class="card h-100 shadow border-0 text-center p-4">
+          <div class="icono-modulo">🌳</div>
+          <div class="fw-bold mb-2">Finca Esmeralda</div>
+          <span class="badge bg-warning text-dark">Gestión de finca</span>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3">
+      <a href="/arriendos" class="text-decoration-none">
+        <div class="card h-100 shadow border-0 text-center p-4">
+          <div class="icono-modulo">🏠</div>
+          <div class="fw-bold mb-2">Arriendos</div>
+          <span class="badge bg-info text-dark">Casas y apartamentos</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %} 

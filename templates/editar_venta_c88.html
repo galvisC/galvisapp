@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Editar Venta{% endblock %}
+{% block content %}
+<div class="mt-4">
+  <h2>Editar Venta</h2>
+  <form method="POST" class="row g-3" id="form-editar-venta">
+    <div class="col-md-4">
+      {% set monto = venta.monto|float %}
+      <input type="text" class="form-control" id="monto-editar-venta" name="monto" value="{% if monto == monto|int %}{{ '{:,}'.format(monto|int) }}{% else %}{{ '{:,.2f}'.format(monto) }}{% endif %}" required autocomplete="off">
+    </div>
+    <div class="col-md-4">
+      <input type="date" class="form-control" name="fecha" value="{{ venta.fecha }}" required>
+    </div>
+    <div class="col-md-4 d-grid">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+  <script>
+    // Formatear el campo monto con puntos de miles mientras se edita
+    const montoEditarVentaInput = document.getElementById('monto-editar-venta');
+    montoEditarVentaInput.addEventListener('input', function(e) {
+      let value = this.value.replace(/\./g, '').replace(/,/g, '').replace(/[^\d]/g, '');
+      if (value) {
+        value = parseInt(value, 10).toLocaleString('es-CO');
+      }
+      this.value = value;
+    });
+    // Al enviar el formulario, quitar los puntos para guardar solo el número
+    document.getElementById('form-editar-venta').addEventListener('submit', function(e) {
+      montoEditarVentaInput.value = montoEditarVentaInput.value.replace(/\./g, '').replace(/,/g, '');
+    });
+  </script>
+  <a href="{{ url_for('carniceria88_ventas') }}" class="btn btn-link mt-3">Volver a la lista de ventas</a>
+</div>
+{% endblock %} 
